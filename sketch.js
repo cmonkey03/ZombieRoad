@@ -35,7 +35,7 @@ function setup() {
 
 
 //THREE FUNCTIONS:
-//1. Draw makes our rectangles and objects
+//1. Draw makes our rectangles, circle and timer with incrementor
 //2.1 CONSTRUCTOR FUNCTION rectObj sets colors of rectangles
 //2.2 HELPER: sets square color & if hit
 //2.3 HELPER: scrolls the square right to LEFT!
@@ -66,10 +66,10 @@ function draw(){
 	let timerElement = document.getElementById("timer")
 	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
 		timer++;
+		timerElement.innerText = `Timer: ${timer}`
 	}
-	timerElement.innerText = `Timer: ${timer}`
 	//Condition to end game
-	// if (timer == 0) {
+	// if (score === 50) {
 	//   text("GAME OVER", width/2, height*0.7);
 	// }
 
