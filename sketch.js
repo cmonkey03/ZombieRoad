@@ -12,7 +12,6 @@ var scrollSpeed = 2;
 
 // setup timer value & get timer element
 let timer = 0
-let timerElement = document.getElementById("timer")
 
 //SETUP FUNCTION
 function setup() {
@@ -30,7 +29,7 @@ function setup() {
 
   // create a new circle object
 	cir = new circleObj(20);
-	console.log(rects);
+	// console.log(rects);
 
 }
 
@@ -62,6 +61,17 @@ function draw(){
 	}
 
 	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
+
+	//Update Timer
+	let timerElement = document.getElementById("timer")
+	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+		timer++;
+	}
+	timerElement.innerText = `Timer: ${timer}`
+	//Condition to end game
+	// if (timer == 0) {
+	//   text("GAME OVER", width/2, height*0.7);
+	// }
 
 }
 
@@ -109,21 +119,5 @@ function circleObj(dia){
 		fill(this.color);
 		ellipse(this.x,this.y,this.dia,this.dia);
 	}
-
-}
-
-//Update timer
-function updateTimer() {
-	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
-		timer++;
-	}
-	console.log(frameCount)
-	console.log(timer)
-	//
-	timerElement.innerText = `Timer: ${timer}`
-	//Condition to end game
-	// if (timer == 0) {
-	//   text("GAME OVER", width/2, height*0.7);
-	// }
 
 }
