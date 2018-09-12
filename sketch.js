@@ -57,7 +57,6 @@ function draw(){
 
 function playScreen() {
 
-
 	image(bgImg, x1, 0, width, height);
 	image(bgImg, x2, 0, width, height);
 	x1 -= scrollSpeed;
@@ -136,12 +135,9 @@ function circleObj(dia){
 
 }
 
-
-// game screen conditions
+// game screen conditional functions
 function initScreen() {
-	text("Click to start", 100, 100);
   background(62, 179, 183);
-  textAlign(CENTER);
 }
 
 function keyPressed() {
@@ -153,4 +149,14 @@ function keyPressed() {
 function startGame() {
 	document.getElementById("overlay").style.display = "none";
   gameScreen = 1;
+}
+
+function mousePressed() {
+	if (gameScreen == 1) {
+		gameScreen = 2;
+	}
+}
+
+function gameOverScreen() {
+	document.getElementById("end-game-overlay").style.display = "block";
 }
