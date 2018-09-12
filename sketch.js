@@ -10,6 +10,9 @@ var x2;
 
 var scrollSpeed = 2;
 
+// setup timer value & get timer element
+let timer = 0
+
 //SETUP FUNCTION
 function setup() {
 	createCanvas(1000,300);
@@ -26,12 +29,13 @@ function setup() {
 
   // create a new circle object
 	cir = new circleObj(20);
-	console.log(rects);
+	// console.log(rects);
+
 }
 
 
 //THREE FUNCTIONS:
-//1. Draw makes our rectangles and objects
+//1. Draw makes our rectangles, circle and timer with incrementor
 //2.1 CONSTRUCTOR FUNCTION rectObj sets colors of rectangles
 //2.2 HELPER: sets square color & if hit
 //2.3 HELPER: scrolls the square right to LEFT!
@@ -57,6 +61,17 @@ function draw(){
 	}
 
 	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
+
+	//Update Timer
+	let timerElement = document.getElementById("timer")
+	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+		timer++;
+		timerElement.innerText = `Timer: ${timer}`
+	}
+	//Condition to end game
+	// if (score === 50) {
+	//   text("GAME OVER", width/2, height*0.7);
+	// }
 
 }
 
