@@ -13,9 +13,12 @@ var scrollSpeed = 2;
 // setup timer value & get timer element
 let timer = 0
 
+// setup current view
+let gameScreen = 0;
+
 //SETUP FUNCTION
 function setup() {
-	createCanvas(1000,300);
+	createCanvas(1200,600);
 
   //this is the image setup (original canvas is 1000x300)
   bgImg = loadImage("./assets/background.png");
@@ -43,22 +46,34 @@ function setup() {
 //3.2 HELPER: Displays the circle?
 
 function draw(){
-    image(bgImg, x1, 0, width, height);
-    image(bgImg, x2, 0, width, height);
-    x1 -= scrollSpeed;
-    x2 -= scrollSpeed;
+	if (gameScreen == 0) {
+    initScreen();
+  } else if (gameScreen == 1) {
+    playScreen();
+  } else if (gameScreen == 2) {
+    gameOverScreen();
+  }
+}
 
-    if (x1 < -width){
-     x1 = width;
-    }
-    if (x2 < -width){
-     x2 = width;
-    }
+function playScreen() {
+
+
+	image(bgImg, x1, 0, width, height);
+	image(bgImg, x2, 0, width, height);
+	x1 -= scrollSpeed;
+	x2 -= scrollSpeed;
+	if (x1 < -width){
+	 x1 = width;
+	}
+	if (x2 < -width){
+	 x2 = width;
+	}
 
 	for(i=0;i<numRects;i++){
 		rects[i].disp();
 		rects[i].collide( cir ); //collide against the circle object
 	}
+
 
 	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
 
@@ -68,10 +83,10 @@ function draw(){
 		timer++;
 		timerElement.innerText = `Timer: ${timer}`
 	}
-	//Condition to end game
-	// if (score === 50) {
-	//   text("GAME OVER", width/2, height*0.7);
-	// }
+//Condition to end game
+// if (score === 50) {
+//   text("GAME OVER", width/2, height*0.7);
+// }
 
 }
 
@@ -101,7 +116,6 @@ function rectObj(x,y,w,h){
 			this.x = -this.w;
 		}
 		rect(this.x,this.y,this.w,this.h);
-
 	}
 
 }
@@ -120,4 +134,23 @@ function circleObj(dia){
 		ellipse(this.x,this.y,this.dia,this.dia);
 	}
 
+}
+
+
+// game screen conditions
+function initScreen() {
+	text("Click to start", 100, 100);
+  background(62, 179, 183);
+  textAlign(CENTER);
+}
+
+function keyPressed() {
+  if (gameScreen == 0) {
+    startGame();
+  }
+}
+
+function startGame() {
+	document.getElementById("overlay").style.display = "none";
+  gameScreen = 1;
 }
