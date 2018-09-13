@@ -19,12 +19,14 @@ let gameScreen = 0;
 // setup score
 let score = 0;
 
+let BASE_URL='http://localhost:3000/api/v1/'
+
 //SETUP FUNCTION
 function setup() {
-	createCanvas(1200,600);
+	createCanvas(windowWidth,windowHeight);
 
   //this is the image setup (original canvas is 1000x300)
-  bgImg = loadImage("./assets/background.png");
+  bgImg = loadImage("./assets/background.jpg");
   x2 = width;
 
   //this builds our squares
@@ -36,7 +38,6 @@ function setup() {
   // create a new circle object
 	cir = new circleObj(20);
 	// console.log(rects);
-
 }
 
 
@@ -85,7 +86,7 @@ function playScreen() {
 		timer++;
 	}
 
-	if (gameScreen == 1 && timer > 60) {
+	if (gameScreen == 1 && timer > 5) {
 		gameScreen = 2;
 	}
 
@@ -160,12 +161,17 @@ function startGame() {
   gameScreen = 1;
 }
 
-function endGame() {
-	if (gameScreen == 1 && timer > 5) {
-		gameScreen = 2;
-	}
-}
 
 function gameOverScreen() {
+	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
+	console.log("hello")
+	fetch(BASE_URL+'games', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: "POST",
+    body: JSON.stringify({user_id:1, score: score, type: "games"})
+	}).then(res => console.log(res))
 }
