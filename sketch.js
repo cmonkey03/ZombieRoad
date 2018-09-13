@@ -6,6 +6,9 @@ var bgImg; // setup the image scroll
 var x1 = 0;
 var x2;
 
+// var cirX = width/2; // cir starting positions
+// var cirY = height/2;
+
 var scrollSpeed = 2;
 
 let timer = 0 // setup timer value & get timer element
@@ -98,7 +101,21 @@ function playScreen() {
 	textSize(36); //Update Score
 	text(`Score: ${score}`, (width/2 + 100), 40);
 
-	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
+	cir.disp(mouseX, mouseY); //pass the x,y pos in to the circle.
+
+	// function keyPressed() {
+	// 	if (keyCode === UP_ARROW) {
+	// 	   cirY = cirY - 10;
+	// 	 } else if (keyCode === DOWN_ARROW) {
+	// 	  cirY = cirY + 10;
+	// 	 }
+	// 	 if (keyCode === LEFT_ARROW) {
+	// 	   cirX = cirX - 5;
+	// 	 } else if (keyCode === RIGHT_ARROW) {
+	// 	   cirX = cirX + 5;
+	// 	 }
+	//
+	// }
 
 }
 
@@ -123,9 +140,9 @@ function rectObj(x,y,w,h){
 	this.disp = function(){
 		noStroke();
 		fill(this.color);
-		this.x += 3 //move to the right!
-		if(this.x > width){ //loop to the left!
-			this.x = -this.w;
+		this.x -= 3 //move to the left!
+		if((this.x + this.w)< 0){ //loop to the right!
+			this.x = width;
 		}
 		rect(this.x,this.y,this.w,this.h);
 	}
