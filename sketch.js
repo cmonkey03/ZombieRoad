@@ -19,12 +19,15 @@ let gameScreen = 0;
 // setup score
 let score = 0;
 
+let BASE_URL='http://localhost:3000/api/v1/'
+
 //SETUP FUNCTION
 function setup() {
-	createCanvas(1200,600);
+	createCanvas(windowWidth,windowHeight);
 
   //this is the image setup (original canvas is 1000x300)
-  bgImg = loadImage("./assets/background.png");
+  bgImg = loadImage("./assets/background.jpg");
+	init_background_image = loadImage("./assets/start_screen_background.jpg");
   x2 = width;
 
   //this builds our squares
@@ -85,7 +88,7 @@ function playScreen() {
 		timer++;
 	}
 
-	if (gameScreen == 1 && timer > 60) {
+	if (gameScreen == 1 && timer > 5) {
 		gameScreen = 2;
 	}
 
@@ -146,13 +149,25 @@ function circleObj(dia){
 
 // game screen conditional functions
 function initScreen() {
-  background(62, 179, 183);
+	background(init_background_image);
 }
 
 function keyPressed() {
   if (gameScreen == 0) {
-    startGame();
-  }
+		if (keyCode === ENTER) {
+			let name = document.getElementById("userName").value
+			console.log("first log", name)
+			fetch(BASE_URL+'users', {
+		    headers: {
+		      'Accept': 'application/json',
+		      'Content-Type': 'application/json'
+		    },
+		    method: "POST",
+		    body: JSON.stringify({name: name})
+			})
+			startGame();
+  	}
+	}
 }
 
 function startGame() {
@@ -160,12 +175,21 @@ function startGame() {
   gameScreen = 1;
 }
 
-function endGame() {
-	if (gameScreen == 1 && timer > 5) {
-		gameScreen = 2;
-	}
+function updateScore() {
+	document.getElementById("scoreDisplay").innerHTML = `Your score is: ${score}`;
 }
 
 function gameOverScreen() {
+	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
+	console.log(score)
+	updateScore();
+	fetch(BASE_URL+'games', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: "POST",
+    body: JSON.stringify({user_id:1, score: score, type: "games"})
+	}).then(res => console.log(res))
 }
