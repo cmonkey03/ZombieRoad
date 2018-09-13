@@ -27,6 +27,7 @@ function setup() {
 
   //this is the image setup (original canvas is 1000x300)
   bgImg = loadImage("./assets/background.jpg");
+	init_background_image = loadImage("./assets/start_screen_background.jpg");
   x2 = width;
 
   //this builds our squares
@@ -38,6 +39,7 @@ function setup() {
   // create a new circle object
 	cir = new circleObj(20);
 	// console.log(rects);
+
 }
 
 
@@ -147,13 +149,25 @@ function circleObj(dia){
 
 // game screen conditional functions
 function initScreen() {
-  background(62, 179, 183);
+	background(init_background_image);
 }
 
 function keyPressed() {
   if (gameScreen == 0) {
-    startGame();
-  }
+		if (keyCode === ENTER) {
+			let name = document.getElementById("userName").value
+			console.log("first log", name)
+			fetch(BASE_URL+'users', {
+		    headers: {
+		      'Accept': 'application/json',
+		      'Content-Type': 'application/json'
+		    },
+		    method: "POST",
+		    body: JSON.stringify({name: name})
+			})
+			startGame();
+  	}
+	}
 }
 
 function startGame() {
@@ -161,11 +175,15 @@ function startGame() {
   gameScreen = 1;
 }
 
+function updateScore() {
+	document.getElementById("scoreDisplay").innerHTML = `Your score is: ${score}`;
+}
 
 function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
-	console.log("hello")
+	console.log(score)
+	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {
       'Accept': 'application/json',
