@@ -1,6 +1,6 @@
 // setup object Oriented Collision
 var rects = [];
-var numRects = 50;
+var numRects = 30;
 var cir;
 
 // setup the image scroll
@@ -13,9 +13,15 @@ var scrollSpeed = 2;
 // setup timer value & get timer element
 let timer = 0
 
+// setup current view
+let gameScreen = 0;
+
+// setup score
+let score = 0;
+
 //SETUP FUNCTION
 function setup() {
-	createCanvas(1000,300);
+	createCanvas(1200,600);
 
   //this is the image setup (original canvas is 1000x300)
   bgImg = loadImage("./assets/background.png");
@@ -43,35 +49,52 @@ function setup() {
 //3.2 HELPER: Displays the circle?
 
 function draw(){
-    image(bgImg, x1, 0, width, height);
-    image(bgImg, x2, 0, width, height);
-    x1 -= scrollSpeed;
-    x2 -= scrollSpeed;
+	if (gameScreen == 0) {
+    initScreen();
+  } else if (gameScreen == 1) {
+    playScreen();
+  } else if (gameScreen == 2) {
+    gameOverScreen();
+  }
+}
 
-    if (x1 < -width){
-     x1 = width;
-    }
-    if (x2 < -width){
-     x2 = width;
-    }
+function playScreen() {
+
+	image(bgImg, x1, 0, width, height);
+	image(bgImg, x2, 0, width, height);
+	x1 -= scrollSpeed;
+	x2 -= scrollSpeed;
+	if (x1 < -width){
+	 x1 = width;
+	}
+	if (x2 < -width){
+	 x2 = width;
+	}
 
 	for(i=0;i<numRects;i++){
 		rects[i].disp();
 		rects[i].collide( cir ); //collide against the circle object
 	}
 
-	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
-
 	//Update Timer
-	let timerElement = document.getElementById("timer")
+	fill(255);
+	textSize(36);
+	textAlign(CENTER);
+	text(`${timer}`, (width/2 - 100), 40);
 	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
 		timer++;
-		timerElement.innerText = `Timer: ${timer}`
 	}
-	//Condition to end game
-	// if (score === 50) {
-	//   text("GAME OVER", width/2, height*0.7);
-	// }
+
+	if (gameScreen == 1 && timer > 60) {
+		gameScreen = 2;
+	}
+
+	textSize(36);
+	// textAlign(CENTER);
+	// fill(0);
+	text(`Score: ${score}`, (width/2 + 100), 40);
+
+	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
 
 }
 
@@ -89,8 +112,8 @@ function rectObj(x,y,w,h){
 
 		if(this.hit){
 			this.color = color(0) //set this rectangle to be black if it gets hit
+			score++;
 		}
-
 	}
 
 	this.disp = function(){
@@ -101,7 +124,6 @@ function rectObj(x,y,w,h){
 			this.x = -this.w;
 		}
 		rect(this.x,this.y,this.w,this.h);
-
 	}
 
 }
@@ -120,4 +142,30 @@ function circleObj(dia){
 		ellipse(this.x,this.y,this.dia,this.dia);
 	}
 
+}
+
+// game screen conditional functions
+function initScreen() {
+  background(62, 179, 183);
+}
+
+function keyPressed() {
+  if (gameScreen == 0) {
+    startGame();
+  }
+}
+
+function startGame() {
+	document.getElementById("overlay").style.display = "none";
+  gameScreen = 1;
+}
+
+function endGame() {
+	if (gameScreen == 1 && timer > 5) {
+		gameScreen = 2;
+	}
+}
+
+function gameOverScreen() {
+	document.getElementById("end-game-overlay").style.display = "block";
 }
