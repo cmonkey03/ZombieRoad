@@ -1,57 +1,58 @@
-// setup object Oriented Collision
-var rects = [];
+var rects = []; // create circle & square variables
 var numRects = 30;
 var cir;
 
-// setup the image scroll
-var bgImg;
+var bgImg; // setup the image scroll
 var x1 = 0;
 var x2;
 
 var scrollSpeed = 2;
 
-// setup timer value & get timer element
-let timer = 0
-
-// setup current view
-let gameScreen = 0;
-
-// setup score
-let score = 0;
-
+let timer = 0 // setup timer value & get timer element
+let gameScreen = 0; // setup current view
+let score = 0; // setup score
 let BASE_URL='http://localhost:3000/api/v1/'
 
-//SETUP FUNCTION
-function setup() {
+var user;
+
+function setup() { //SETUP FUNCTION
 	createCanvas(windowWidth,windowHeight);
 
-  //this is the image setup (original canvas is 1000x300)
-  bgImg = loadImage("./assets/background.jpg");
+  bgImg = loadImage("./assets/background.jpg"); //game play background
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
   x2 = width;
 
-  //this builds our squares
-	for(i=0;i<numRects;i++){
+	for(i=0;i<numRects;i++) {   //this builds our squares
 		r = new rectObj(random(width),random(height), random(10,50), random(10,50) ) // generate a rectObj
-		rects.push(r); //add it to the array.
+		rects.push(r);
 	}
 
-  // create a new circle object
-	cir = new circleObj(20);
-	// console.log(rects);
+	cir = new circleObj(20);   // create a mouse object (circle)
 
+	loginForm = document.getElementById('login-form')
+	loginForm.addEventListener('submit', (event) => {
+		event.preventDefault()
+		let name = document.getElementById("user-name").value
+
+		fetch(BASE_URL+'users', {
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    method: "POST",
+	    body: JSON.stringify({name})
+		})
+			.then(response => response.json())
+			.then(userObj => {
+				user = userObj
+			})
+
+		document.getElementById("overlay").style.display = "none";
+		gameScreen = 1
+	})
 }
 
-
-//THREE FUNCTIONS:
-//1. Draw makes our rectangles, circle and timer with incrementor
-//2.1 CONSTRUCTOR FUNCTION rectObj sets colors of rectangles
-//2.2 HELPER: sets square color & if hit
-//2.3 HELPER: scrolls the square right to LEFT!
-//3.1 CONSTRUCTOR: makes the circle again?
-//3.2 HELPER: Displays the circle?
-
-function draw(){
+function draw() {
 	if (gameScreen == 0) {
     initScreen();
   } else if (gameScreen == 1) {
@@ -59,6 +60,10 @@ function draw(){
   } else if (gameScreen == 2) {
     gameOverScreen();
   }
+}
+
+function initScreen() { //loads startup background
+	background(init_background_image);
 }
 
 function playScreen() {
@@ -79,22 +84,18 @@ function playScreen() {
 		rects[i].collide( cir ); //collide against the circle object
 	}
 
-	//Update Timer
-	fill(255);
+	fill(255); 	//Update Timer
 	textSize(36);
 	textAlign(CENTER);
 	text(`${timer}`, (width/2 - 100), 40);
-	if (frameCount % 60 === 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+	if (frameCount % 60 === 0) {
 		timer++;
 	}
-
-	if (gameScreen == 1 && timer > 5) {
+	if (gameScreen == 1 && timer > 60) {
 		gameScreen = 2;
 	}
 
-	textSize(36);
-	// textAlign(CENTER);
-	// fill(0);
+	textSize(36); //Update Score
 	text(`Score: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(mouseX,mouseY); //pass the x,y pos in to the circle.
@@ -147,42 +148,13 @@ function circleObj(dia){
 
 }
 
-// game screen conditional functions
-function initScreen() {
-	background(init_background_image);
-}
-
-function keyPressed() {
-  if (gameScreen == 0) {
-		if (keyCode === ENTER) {
-			let name = document.getElementById("userName").value
-			console.log("first log", name)
-			fetch(BASE_URL+'users', {
-		    headers: {
-		      'Accept': 'application/json',
-		      'Content-Type': 'application/json'
-		    },
-		    method: "POST",
-		    body: JSON.stringify({name: name})
-			})
-			startGame();
-  	}
-	}
-}
-
-function startGame() {
-	document.getElementById("overlay").style.display = "none";
-  gameScreen = 1;
-}
-
 function updateScore() {
-	document.getElementById("scoreDisplay").innerHTML = `Your score is: ${score}`;
+	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your score is: ${score}`;
 }
 
 function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
-	console.log(score)
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {
@@ -190,6 +162,6 @@ function gameOverScreen() {
       'Content-Type': 'application/json'
     },
     method: "POST",
-    body: JSON.stringify({user_id:1, score: score, type: "games"})
-	}).then(res => console.log(res))
+    body: JSON.stringify({user_id: user.data.id, score: score, type: "games"})
+	})
 }
