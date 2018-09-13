@@ -21,7 +21,7 @@ let score = 0;
 
 //SETUP FUNCTION
 function setup() {
-	createCanvas(1200,600);
+	createCanvas(windowWidth,windowHeight);
 
   //this is the image setup (original canvas is 1000x300)
   bgImg = loadImage("./assets/background.png");
