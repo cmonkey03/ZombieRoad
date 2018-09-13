@@ -16,14 +16,22 @@
 
     <div id="overlay" class="hide-me">
      <div id="overlay-text" class="hide-me">
-       <h3>Welcome!</h3>
        <h4>Press any key to begin.</h4>
+       <div class="form-group">
+         <form id="userName">
+            <label>Enter your name:
+              <input class="form-control" type="text" name="name">
+            </label>
+              <input class="btn btn-primary" type="submit" value="Submit">
+         </form>
+       </div>
      </div>
     </div>
 
     <div id="end-game-overlay" class="hide-me" style="display: none;">
      <div id="end-game-text" class="hide-me">
        <h3>You Lose!</h3>
+       <h3 id="scoreDisplay"></h3>
      </div>
     </div>
 
