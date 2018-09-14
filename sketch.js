@@ -114,7 +114,7 @@ function playScreen() {
 	}
 
 	textSize(36); //Update Score
-	text(`Score: ${score}`, (width/2 + 100), 40);
+	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(mouseX, mouseY); //pass the x,y pos in to the circle.
 
@@ -209,7 +209,7 @@ function circleObj(dia){
 }
 
 function updateScore() {
-	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your score is: ${score}`;
+	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your contamination level is: ${score}`;
 }
 
 function gameOverScreen() {
