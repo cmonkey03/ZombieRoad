@@ -29,6 +29,8 @@ function setup() { //SETUP FUNCTION
 	avatarImage = loadImage('./assets/puppy.gif')
   x2 = width;
 
+	song = loadSound('assets/song.mp3');
+
 	for(let i = 0;i<=7;i++){
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
 	}
@@ -77,12 +79,15 @@ function draw() {
   }
 }
 
+function keyPressed() {
+	song.play();
+}
+
 function initScreen() { //loads startup background
 	background(init_background_image);
 }
 
 function playScreen() {
-
 	image(bgImg, x1, 0, width, height); // scroll background image
 	image(bgImg, x2, 0, width, height);
 	x1 -= scrollSpeed;
