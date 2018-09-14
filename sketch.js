@@ -10,12 +10,11 @@ var zombieImgArray = [];
 var zombieIndex = 0
 var numZombies = 50
 
-var cir;
-
 var bgImg; // setup the image scroll
 var x1 = 0;
 var x2;
 
+var cir;
 var cirX = 0; // cir starting positions
 var cirY = 400;
 
@@ -106,7 +105,7 @@ function playScreen() {
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
-	if (gameScreen == 1 && timer > 10) {
+	if (gameScreen == 1 && timer > 60) {
 		gameScreen = 2;
 	}
 
@@ -199,10 +198,6 @@ function gameOverScreen() {
 	document.getElementById("end-game-overlay").style.display = "block";
 
 	document.body.style.backgroundImage = "url('./assets/end_screen_background.png')"
-	// var img = document.createElement("img");
-	// img.src = ".assets/end_screen_background.png";
-	// var src = document.getElementById("end-game-overlay");
-	// src.appendChild(img);
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {
