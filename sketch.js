@@ -1,7 +1,7 @@
-// var rects = []; // create circle & square variables
+// var rects = []; // create circle & zombie variables
 // var numRects = 30;
-var zombies = []; // create circle & square variables
-var numZombies = 2;
+var zombies = []; // create circle & zombie variables
+var numZombies = 10;
 var zombieImgArray = [];
 var zombieIndex = 0
 // var zombieImg;
@@ -31,12 +31,8 @@ function setup() { //SETUP FUNCTION
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
   x2 = width;
 
-	// for(i=0;i<numRects;i++) {   //this builds our squares
-	// 	r = new rectObj(random(width),random(height), random(10,50), random(10,50) ) // generate a rectObj
-	// 	rects.push(r);
-	// }
-	for(let i = 1;i<=6;i++){
-		zombieImgArray.push(loadImage(`./assets/zombieframe${i}.png`))
+	for(let i = 0;i<=7;i++){
+		zombieImgArray.push(loadImage(`./assets/${i}.png`))
 	}
 
 	for(i=0;i<numZombies;i++) {
@@ -96,11 +92,6 @@ function playScreen() {
 	 x2 = width;
 	}
 
-	// for(i=0;i<numRects;i++){
-	// 	rects[i].disp();
-	// 	rects[i].collide( cir ); //collide against the circle object
-	// }
-
 	for(i=0;i<numZombies;i++) {
 		zombies[i].disp();
 		zombies[i].collide(cir);
@@ -159,48 +150,9 @@ function zombieObj(x,y){
 			this.x = width;
 		}
 
-		if (frameCount % 10 === 0) {
-			zombieIndex++
-			console.log(zombieIndex)
-			if (frameCount % 60 === 0) {
-				zombieIndex = 0
-			}
-		}
-		// console.log(zombieImgArray[zombieIndex])
-		image(zombieImgArray[zombieIndex],this.x,this.y,this.w,this.h)
-		// zombieImg.position(this.x, this.y)
-		// zombieImg.size(125, 200);
+		image(zombieImgArray[parseInt(frameCount/10)%8],this.x,this.y,this.w,this.h)
 	}
 }
-
-// function rectObj(x,y,w,h){
-// 	this.x = x
-// 	this.y = y
-// 	this.w = w
-// 	this.h = h
-// 	this.color = color(random(255),random(255),random(255))
-// 	this.hit = false;
-//
-// 	this.collide = function(obj){
-// 		this.hit = collideRectCircle(this.x, this.y, this.w, this.h, obj.x, obj.y, obj.dia); //collide the cir object into this rectangle object.
-//
-// 		if(this.hit){
-// 			this.color = color(0) //set this rectangle to be black if it gets hit
-// 			score++;
-// 		}
-// 	}
-//
-// 	this.disp = function(){
-// 		noStroke();
-// 		fill(this.color);
-// 		this.x -= 3 //move to the left!
-// 		if((this.x + this.w)< 0){ //loop to the right!
-// 			this.x = width;
-// 		}
-// 		rect(this.x,this.y,this.w,this.h);
-// 	}
-//
-// }
 
 function circleObj(dia){
 	this.dia = dia;
