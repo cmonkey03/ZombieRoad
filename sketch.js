@@ -16,10 +16,10 @@ var bgImg; // setup the image scroll
 var x1 = 0;
 var x2;
 
-var scrollSpeed = 2;
+var cirX = 0; // cir starting positions
+var cirY = 400;
 
-// var cirX = width/2; // cir starting positions
-// var cirY = height/2;
+var scrollSpeed = 2;
 
 function setup() { //SETUP FUNCTION
 	createCanvas(windowWidth,windowHeight);
@@ -114,21 +114,23 @@ function playScreen() {
 	textFont("VT323")
 	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
-	cir.disp(mouseX, mouseY); //pass the x,y pos in to the circle.
+	cir.disp(cirX,cirY)
 
-	// function keyPressed() {
-	// 	if (keyCode === UP_ARROW) {
-	// 	   cirY = cirY - 10;
-	// 	 } else if (keyCode === DOWN_ARROW) {
-	// 	  cirY = cirY + 10;
-	// 	 }
-	// 	 if (keyCode === LEFT_ARROW) {
-	// 	   cirX = cirX - 5;
-	// 	 } else if (keyCode === RIGHT_ARROW) {
-	// 	   cirX = cirX + 5;
-	// 	 }
-	//
-	// }
+	if(keyIsDown(UP_ARROW)) {
+		cirY = cirY - 5
+	}
+
+	if(keyIsDown(DOWN_ARROW)) {
+		cirY = cirY + 5
+	}
+
+	if(keyIsDown(LEFT_ARROW)) {
+		cirX = cirX - 5
+	}
+
+	if(keyIsDown(RIGHT_ARROW)) {
+		cirX = cirX + 5
+	}
 
 }
 
@@ -163,7 +165,7 @@ function circleObj(dia){
 	this.x;
 	this.y;
 
-	this.disp = function(x,y){
+	this.disp = function(x,y,callback){
 		this.x = x;
 		this.y = y;
 		noStroke();
