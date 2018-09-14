@@ -29,6 +29,7 @@ function setup() { //SETUP FUNCTION
 
   bgImg = loadImage("./assets/background.jpg"); //game play background
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
+	end_background_image = loadImage("./assets/end_screen_background.png")
   x2 = width;
 
 	for(let i = 0;i<=7;i++){
@@ -100,16 +101,17 @@ function playScreen() {
 	fill(255); 	//Update Timer
 	textSize(36);
 	textAlign(CENTER);
-	text(`${timer}`, (width/2 - 100), 40);
+	text(`${timer}`, (width/2 - 300), 40);
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
-	if (gameScreen == 1 && timer > 60) {
+	if (gameScreen == 1 && timer > 5) {
 		gameScreen = 2;
 	}
 
 	textSize(36); //Update Score
-	text(`Score: ${score}`, (width/2 + 100), 40);
+	textFont("VT323")
+	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(mouseX, mouseY); //pass the x,y pos in to the circle.
 
@@ -171,12 +173,18 @@ function circleObj(dia){
 }
 
 function updateScore() {
-	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your score is: ${score}`;
+	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your contamination level is: ${score}`;
 }
 
 function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
+
+	document.body.style.backgroundImage = "url('./assets/end_screen_background.png')"
+	// var img = document.createElement("img");
+	// img.src = ".assets/end_screen_background.png";
+	// var src = document.getElementById("end-game-overlay");
+	// src.appendChild(img);
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {

@@ -6,7 +6,7 @@
     <title>ModThreeProject</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style> body {padding: 0; margin: 0;} </style>
-    <script src="./libraries/p5.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Creepster|Overpass|VT323" rel="stylesheet">    <script src="./libraries/p5.js"></script>
     <script src="./libraries/p5.dom.js"></script>
     <script src="./libraries/p5.gif.js"></script>
     <script src="./libraries/p5.collide2D/p5.collide2d.js"></script>
@@ -17,13 +17,17 @@
 
     <div id="overlay" class="hide-me">
      <div id="overlay-text" class="hide-me">
-       <h4>Welcome to ZombieRoad.</h4>
-       <div class="form-group">
+      <div class="welcome-sign">
+        <h2 class="game-title">ZombieRoad</h2>
+        <h5 class="welcome-text">Avoid the Zombies</h5>
+
+      </div>
+       <div class="name-form form-group">
          <form id="login-form">
-            <label>Enter your name:
-              <input class="form-control" type="text" name="name" id="user-name">
+            <label>Enter your name:<br>
+              <input class="text form-control" type="text" name="name" id="user-name">
             </label>
-              <input class="btn btn-primary" type="submit" value="Submit">
+              <input class="btn btn-primary" type="submit" value="Go!">
          </form>
        </div>
      </div>
