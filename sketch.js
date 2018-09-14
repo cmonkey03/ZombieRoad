@@ -1,10 +1,14 @@
-// var rects = []; // create circle & zombie variables
-// var numRects = 30;
+let timer = 0 // setup timer value & get timer element
+let gameScreen = 0; // setup current view
+let score = 0; // setup score
+let BASE_URL='http://localhost:3000/api/v1/'
+
+var user;
+
 var zombies = []; // create circle & zombie variables
-var numZombies = 20;
 var zombieImgArray = [];
 var zombieIndex = 0
-// var zombieImg;
+var numZombies = 10
 
 var cir;
 
@@ -12,17 +16,10 @@ var bgImg; // setup the image scroll
 var x1 = 0;
 var x2;
 
-// var cirX = width/2; // cir starting positions
-// var cirY = height/2;
-
 var scrollSpeed = 2;
 
-let timer = 0 // setup timer value & get timer element
-let gameScreen = 0; // setup current view
-let score = 0; // setup score
-let BASE_URL='http://localhost:3000/api/v1/'
-
-var user;
+// var cirX = width/2; // cir starting positions
+// var cirY = height/2;
 
 function setup() { //SETUP FUNCTION
 	createCanvas(windowWidth,windowHeight);
@@ -34,6 +31,10 @@ function setup() { //SETUP FUNCTION
 
 	for(let i = 0;i<=7;i++){
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
+	}
+
+	if (frameCount % 120 === 0) {
+		++numZombies
 	}
 
 	for(i=0;i<numZombies;i++) {
@@ -93,7 +94,7 @@ function playScreen() {
 	 x2 = width;
 	}
 
-	for(i=0;i<numZombies;i++) {
+	for(i=0;i<zombies.length;i++) {
 		zombies[i].disp();
 		zombies[i].collide(cir);
 	}
@@ -130,6 +131,7 @@ function playScreen() {
 	// }
 
 }
+
 
 function zombieObj(x,y){
 	this.w = 125;
