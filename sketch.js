@@ -1,10 +1,14 @@
-// var rects = []; // create circle & zombie variables
-// var numRects = 30;
+let timer = 0 // setup timer value & get timer element
+let gameScreen = 0; // setup current view
+let score = 0; // setup score
+let BASE_URL='http://localhost:3000/api/v1/'
+
+var user;
+
 var zombies = []; // create circle & zombie variables
-var numZombies = 20;
 var zombieImgArray = [];
 var zombieIndex = 0
-// var zombieImg;
+var numZombies = 10
 
 var cir;
 
@@ -17,22 +21,20 @@ var cirY = 400;
 
 var scrollSpeed = 2;
 
-let timer = 0 // setup timer value & get timer element
-let gameScreen = 0; // setup current view
-let score = 0; // setup score
-let BASE_URL='http://localhost:3000/api/v1/'
-
-var user;
-
 function setup() { //SETUP FUNCTION
 	createCanvas(windowWidth,windowHeight);
 
   bgImg = loadImage("./assets/background.jpg"); //game play background
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
+	end_background_image = loadImage("./assets/end_screen_background.png")
   x2 = width;
 
 	for(let i = 0;i<=7;i++){
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
+	}
+
+	if (frameCount % 120 === 0) {
+		++numZombies
 	}
 
 	for(i=0;i<numZombies;i++) {
@@ -92,7 +94,7 @@ function playScreen() {
 	 x2 = width;
 	}
 
-	for(i=0;i<numZombies;i++) {
+	for(i=0;i<zombies.length;i++) {
 		zombies[i].disp();
 		zombies[i].collide(cir);
 	}
@@ -100,16 +102,17 @@ function playScreen() {
 	fill(255); 	//Update Timer
 	textSize(36);
 	textAlign(CENTER);
-	text(`${timer}`, (width/2 - 100), 40);
+	text(`${timer}`, (width/2 - 300), 40);
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
-	if (gameScreen == 1 && timer > 60) {
+	if (gameScreen == 1 && timer > 5) {
 		gameScreen = 2;
 	}
 
 	textSize(36); //Update Score
-	text(`Score: ${score}`, (width/2 + 100), 40);
+	textFont("VT323")
+	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(cirX,cirY)
 
@@ -130,6 +133,7 @@ function playScreen() {
 	}
 
 }
+
 
 function zombieObj(x,y){
 	this.w = 125;
@@ -172,12 +176,18 @@ function circleObj(dia){
 }
 
 function updateScore() {
-	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your score is: ${score}`;
+	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your contamination level is ${score}.`;
 }
 
 function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
+
+	document.body.style.backgroundImage = "url('./assets/end_screen_background.png')"
+	// var img = document.createElement("img");
+	// img.src = ".assets/end_screen_background.png";
+	// var src = document.getElementById("end-game-overlay");
+	// src.appendChild(img);
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {

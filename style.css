@@ -5,36 +5,27 @@ html, body {
 body {
   margin: 0;
   display: flex;
-
-  /* This centers our sketch horizontally. */
   justify-content: center;
-
-  /* This centers our sketch vertically. */
   align-items: center;
   flex-direction: column;
 }
 
-/* #nav {
- display: flex;
- justify-content: center;
-} */
-
 #overlay, #end-game-overlay{
-  position: fixed; /* Sit on top of the page content */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  position: fixed;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
 }
 
 #overlay-text, #end-game-text{
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   font-size: 50px;
   color: white;
@@ -43,4 +34,55 @@ body {
 }
 canvas {
   z-index:-1;
+}
+
+.game-title {
+  font-family: 'Creepster', cursive;
+}
+
+.welcome-sign {
+  transform: rotate(9deg);
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+
+.welcome-text, #name-form {
+  font-family: 'Overpass', sans-serif;
+}
+
+.name-form {
+  font-family: 'Overpass', sans-serif;
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin-top: 40%;
+  color:black;
+  text-align:center;
+}
+
+.text {
+  font-family: 'Overpass', sans-serif;
+  border-radius: 5px;
+  width: 93%;
+  padding: 8px 8px;
+  margin: 4px 0;
+}
+
+label, #end-game-overlay {
+  font-family: 'VT323', monospace;
 }
