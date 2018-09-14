@@ -151,7 +151,6 @@ function zombieObj(x,y){
 		if((this.x + this.w)< 0){ //loop to the right!
 			this.x = width;
 		}
-		frameRate(10)
 		image(zombieImgArray[parseInt(frameCount/10)%8],this.x,this.y,this.w,this.h)
 	}
 }
@@ -173,7 +172,7 @@ function circleObj(dia){
 }
 
 function updateScore() {
-	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your contamination level is: ${score}`;
+	document.getElementById("scoreDisplay").innerHTML = `${user.data.attributes.name}, your contamination level is ${score}.`;
 }
 
 function gameOverScreen() {
