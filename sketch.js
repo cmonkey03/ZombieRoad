@@ -11,6 +11,7 @@ var zombieIndex = 0
 var numZombies = 50
 
 var avatar; // setup character avatar including starting coordinates
+var avatarImgArray = []
 var avatarX = 0;
 var avatarY = 400;
 
@@ -26,11 +27,14 @@ function setup() { //SETUP FUNCTION
   bgImg = loadImage("./assets/background.jpg"); //game play background
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
 	end_background_image = loadImage("./assets/end_screen_background.png")
-	avatarImage = loadImage('./assets/puppy.gif')
   x2 = width;
 
-	for(let i = 0;i<=7;i++){
+	for(let i = 0;i<=7;i++){  //load 8 zombie images
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
+	}
+
+	for(let i = 0;i<=7;i++){  //load 8 pup images
+		avatarImgArray.push(loadImage(`./assets/pup-frames/output-${i}.png`))
 	}
 
 	if (frameCount % 120 === 0) {
@@ -153,7 +157,7 @@ function avatarObj(){
 		this.y = y;
 		noStroke();
 		// add possible avatar color filter dependent on score
-		image(avatarImage,this.x,this.y,this.w,this.h)
+		image(avatarImgArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
 	}
 
 }
