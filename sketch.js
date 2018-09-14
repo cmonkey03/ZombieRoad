@@ -1,8 +1,11 @@
 // var rects = []; // create circle & square variables
 // var numRects = 30;
 var zombies = []; // create circle & square variables
-var numZombies = 24;
-var zombieImg;
+var numZombies = 2;
+var zombieImgArray = [];
+var zombieIndex = 0
+// var zombieImg;
+
 var cir;
 
 var bgImg; // setup the image scroll
@@ -32,7 +35,9 @@ function setup() { //SETUP FUNCTION
 	// 	r = new rectObj(random(width),random(height), random(10,50), random(10,50) ) // generate a rectObj
 	// 	rects.push(r);
 	// }
-	zombieImg = loadImage("./assets/zombie.png");
+	for(let i = 1;i<=6;i++){
+		zombieImgArray.push(loadImage(`./assets/zombieframe${i}.png`))
+	}
 
 	for(i=0;i<numZombies;i++) {
 		z = new zombieObj(random(width), random(height))
@@ -138,9 +143,6 @@ function zombieObj(x,y){
 	this.h = 200;
 	this.x = x;
 	this.y = y;
-	// img = createImg("./assets/zombie.png");
-  // img.size(125, 200);
-	// img.position(this.x, this.y)
 
 	this.collide = function(obj){
 		this.hit = collideRectCircle(this.x, this.y, this.w, this.h, obj.x, obj.y, obj.dia); //collide the cir object into this zombie object.
@@ -156,7 +158,16 @@ function zombieObj(x,y){
 		if((this.x + this.w)< 0){ //loop to the right!
 			this.x = width;
 		}
-		image(zombieImg,this.x,this.y,this.w,this.h)
+
+		if (frameCount % 10 === 0) {
+			zombieIndex++
+			console.log(zombieIndex)
+			if (frameCount % 60 === 0) {
+				zombieIndex = 0
+			}
+		}
+		// console.log(zombieImgArray[zombieIndex])
+		image(zombieImgArray[zombieIndex],this.x,this.y,this.w,this.h)
 		// zombieImg.position(this.x, this.y)
 		// zombieImg.size(125, 200);
 	}
