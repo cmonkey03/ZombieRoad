@@ -106,7 +106,7 @@ function playScreen() {
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
-	if (gameScreen == 1 && timer > 5) {
+	if (gameScreen == 1 && timer > 10) {
 		gameScreen = 2;
 	}
 
@@ -115,6 +115,20 @@ function playScreen() {
 	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(cirX,cirY)
+
+	if (cirX >= width){
+ 		cirX = width;
+	}
+	if (cirX <= 0){
+		cirX = 0;
+	}
+	if (cirY <= 0){
+		cirY = 0;
+	}
+	if (cirY >= height){
+		cirY = height;
+	}
+
 
 	if(keyIsDown(UP_ARROW)) {
 		cirY = cirY - 5
@@ -131,6 +145,7 @@ function playScreen() {
 	if(keyIsDown(RIGHT_ARROW)) {
 		cirX = cirX + 5
 	}
+
 
 }
 
