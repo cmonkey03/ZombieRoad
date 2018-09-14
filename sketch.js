@@ -1,7 +1,7 @@
 // var rects = []; // create circle & zombie variables
 // var numRects = 30;
 var zombies = []; // create circle & zombie variables
-var numZombies = 10;
+var numZombies = 20;
 var zombieImgArray = [];
 var zombieIndex = 0
 // var zombieImg;
@@ -149,7 +149,7 @@ function zombieObj(x,y){
 		if((this.x + this.w)< 0){ //loop to the right!
 			this.x = width;
 		}
-
+		frameRate(10)
 		image(zombieImgArray[parseInt(frameCount/10)%8],this.x,this.y,this.w,this.h)
 	}
 }
