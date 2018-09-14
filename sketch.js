@@ -26,6 +26,7 @@ function setup() { //SETUP FUNCTION
 
   bgImg = loadImage("./assets/background.jpg"); //game play background
 	init_background_image = loadImage("./assets/start_screen_background.jpg");
+	end_background_image = loadImage("./assets/end_screen_background.png")
   x2 = width;
 
 	// for(i=0;i<numRects;i++) {   //this builds our squares
@@ -108,7 +109,7 @@ function playScreen() {
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
-	if (gameScreen == 1 && timer > 60) {
+	if (gameScreen == 1 && timer > 5) {
 		gameScreen = 2;
 	}
 
@@ -214,6 +215,12 @@ function updateScore() {
 function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
+
+	document.body.style.backgroundImage = "url('./assets/end_screen_background.png')"
+	// var img = document.createElement("img");
+	// img.src = ".assets/end_screen_background.png";
+	// var src = document.getElementById("end-game-overlay");
+	// src.appendChild(img);
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {

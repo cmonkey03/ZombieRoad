@@ -19,6 +19,7 @@ body {
  justify-content: center;
 } */
 
+
 #overlay, #end-game-overlay{
   position: fixed; /* Sit on top of the page content */
   width: 100%; /* Full width (cover the whole page) */
@@ -34,7 +35,7 @@ body {
 
 #overlay-text, #end-game-text{
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   font-size: 50px;
   color: white;
@@ -43,4 +44,55 @@ body {
 }
 canvas {
   z-index:-1;
+}
+
+.game-title {
+  font-family: 'Creepster', cursive;
+}
+
+.welcome-sign {
+  transform: rotate(9deg);
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+
+.welcome-text, #name-form {
+  font-family: 'Overpass', sans-serif;
+}
+
+.name-form {
+  font-family: 'Overpass', sans-serif;
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin-top: 40%;
+  color:black;
+  text-align:center;
+}
+
+.text {
+  font-family: 'Overpass', sans-serif;
+  border-radius: 5px;
+  width: 93%;
+  padding: 8px 8px;
+  margin: 4px 0;
+}
+
+label, #end-game-overlay {
+  font-family: 'VT323', monospace;
 }
