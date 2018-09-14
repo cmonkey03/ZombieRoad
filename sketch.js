@@ -105,7 +105,7 @@ function playScreen() {
 	fill(255); 	//Update Timer
 	textSize(36);
 	textAlign(CENTER);
-	text(`${timer}`, (width/2 - 100), 40);
+	text(`${timer}`, (width/2 - 300), 40);
 	if (frameCount % 60 === 0) {
 		timer++;
 	}
@@ -114,6 +114,7 @@ function playScreen() {
 	}
 
 	textSize(36); //Update Score
+	textFont("VT323")
 	text(`Contamination Level: ${score}`, (width/2 + 100), 40);
 
 	cir.disp(mouseX, mouseY); //pass the x,y pos in to the circle.
