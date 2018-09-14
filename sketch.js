@@ -8,7 +8,7 @@ var user;
 var zombies = []; // create circle & zombie variables
 var zombieImgArray = [];
 var zombieIndex = 0
-var numZombies = 10
+var numZombies = 50
 
 var cir;
 
@@ -94,7 +94,7 @@ function playScreen() {
 	 x2 = width;
 	}
 
-	for(i=0;i<zombies.length;i++) {
+	for(i=0;i<(parseInt(timer/3));i++) {
 		zombies[i].disp();
 		zombies[i].collide(cir);
 	}
@@ -136,7 +136,7 @@ function playScreen() {
 function zombieObj(x,y){
 	this.w = 125;
 	this.h = 200;
-	this.x = x;
+	this.x = width;
 	this.y = y;
 
 	this.collide = function(obj){
@@ -149,7 +149,7 @@ function zombieObj(x,y){
 
 	this.disp = function(){
 		noStroke();
-		this.x -= 3 //move to the left!
+		this.x -= parseInt(2+timer/10) //move to the left!
 		if((this.x + this.w)< 0){ //loop to the right!
 			this.x = width;
 		}
