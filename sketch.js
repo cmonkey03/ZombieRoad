@@ -11,7 +11,9 @@ var zombieIndex = 0
 var numZombies = 50
 
 var avatar; // setup character avatar including starting coordinates
-var avatarImgArray = []
+var healthyPupArray = []
+var injuredPupArray = []
+var badlyInjuredPupArray = []
 var avatarX = 0;
 var avatarY = 400;
 
@@ -29,14 +31,20 @@ function setup() { //SETUP FUNCTION
 	end_background_image = loadImage("./assets/end_screen_background.png")
   x2 = width;
 
-	song = loadSound('assets/song.mp3'); 
+	song = loadSound('assets/song.mp3');
 
 	for(let i = 0;i<=7;i++){ //load 8 zombie images
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
 	}
 
 	for(let i = 0;i<=7;i++){  //load 8 pup images
-		avatarImgArray.push(loadImage(`./assets/pup-frames/output-${i}.png`))
+		healthyPupArray.push(loadImage(`./assets/pup-frames/output-${i}.png`))
+	}
+	for(let i = 0;i<=7;i++){  //load 8 pup images
+		injuredPupArray.push(loadImage(`./assets/injured-pup1/pup${i}.png`))
+	}
+	for(let i = 0;i<=7;i++){  //load 8 pup images
+		badlyInjuredPupArray.push(loadImage(`./assets/injured-pup2/pup${i}.png`))
 	}
 
 	if (frameCount % 120 === 0) {
@@ -162,7 +170,13 @@ function avatarObj(){
 		this.y = y;
 		noStroke();
 		// add possible avatar color filter dependent on score
-		image(avatarImgArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		if (score < 50) {
+			image(healthyPupArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		} else if (score < 100 && score >= 50) {
+			image(injuredPupArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		} else {
+			image(badlyInjuredPupArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		}
 	}
 
 }
