@@ -11,7 +11,9 @@ var zombieIndex = 0
 var numZombies = 50
 
 var avatar; // setup character avatar including starting coordinates
-var avatarImgArray = []
+var healthyAvatarArray = []
+var injuredAvatarArray = []
+var badlyInjuredAvatarArray = []
 var avatarX = 0;
 var avatarY = 400;
 
@@ -24,19 +26,25 @@ var scrollSpeed = 2;
 function setup() { //SETUP FUNCTION
 	createCanvas(windowWidth,windowHeight);
 
-  bgImg = loadImage("./assets/background.jpg"); //game play background
-	init_background_image = loadImage("./assets/start_screen_background.jpg");
-	end_background_image = loadImage("./assets/end_screen_background.png")
+  bgImg = loadImage("./assets/backgrounds/game_screen.jpg"); //game play background
+	init_background_image = loadImage("./assets/backgrounds/start_screen.jpg");
+	end_background_image = loadImage("./assets/backgrounds/end_screen.png")
   x2 = width;
 
 	song = loadSound('./assets/song.mp3');
 
 	for(let i = 0;i<=7;i++){ //load 8 zombie images
-		zombieImgArray.push(loadImage(`./assets/${i}.png`))
+		zombieImgArray.push(loadImage(`./assets/zombie/${i}.png`))
 	}
 
 	for(let i = 0;i<=7;i++){  //load 8 pup images
-		avatarImgArray.push(loadImage(`./assets/pup-frames/output-${i}.png`))
+		healthyAvatarArray.push(loadImage(`./assets/avatar/${i}.png`))
+	}
+	for(let i = 0;i<=7;i++){  //load 8 injured pup images
+		injuredAvatarArray.push(loadImage(`./assets/avatar_injured_1/${i}.png`))
+	}
+	for(let i = 0;i<=7;i++){  //load 8 badly injured pup images
+		badlyInjuredAvatarArray.push(loadImage(`./assets/avatar_injured_2/${i}.png`))
 	}
 
 	if (frameCount % 120 === 0) {
@@ -162,7 +170,13 @@ function avatarObj(){
 		this.y = y;
 		noStroke();
 		// add possible avatar color filter dependent on score
-		image(avatarImgArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		if (score < 50) {
+			image(healthyAvatarArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		} else if (score < 100 && score >= 50) {
+			image(injuredAvatarArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		} else {
+			image(badlyInjuredAvatarArray[parseInt(frameCount/3)%8],this.x,this.y,this.w,this.h)
+		}
 	}
 
 }
@@ -175,7 +189,7 @@ function gameOverScreen() {
 	remove();
 	document.getElementById("end-game-overlay").style.display = "block";
 
-	document.body.style.backgroundImage = "url('./assets/end_screen_background.png')"
+	document.body.style.backgroundImage = "url('./assets/backgrounds/end_screen.png')"
 	updateScore();
 	fetch(BASE_URL+'games', {
     headers: {
