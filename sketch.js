@@ -29,7 +29,7 @@ function setup() { //SETUP FUNCTION
 	end_background_image = loadImage("./assets/end_screen_background.png")
   x2 = width;
 
-	song = loadSound('assets/song.mp3'); 
+	song = loadSound('./assets/song.mp3');
 
 	for(let i = 0;i<=7;i++){ //load 8 zombie images
 		zombieImgArray.push(loadImage(`./assets/${i}.png`))
