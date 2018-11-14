@@ -1,7 +1,7 @@
 let timer = 0 // setup timer value & get timer element
 let gameScreen = 0; // setup current view
 let score = 0; // setup score
-let BASE_URL='http://localhost:3000/api/v1/'
+let BASE_URL='https://zombie-road-api.herokuapp.com/api/v1/'
 
 var user;
 
